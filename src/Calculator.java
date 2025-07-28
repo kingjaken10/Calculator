@@ -5,8 +5,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 public class Calculator {
-    int boardWidth = 360; // window width
-    int boardHeight = 540; // window height
+    int boardWidth = 360;   // window width
+    int boardHeight = 540;  // window height
 
     // colors for calculator
     Color customLightGray = new Color(212, 212, 210);
@@ -58,12 +58,32 @@ public class Calculator {
         buttonsPanel.setBackground(customBlack); // set background black
         frame.add(buttonsPanel); // add button panel to window
 
-        // iterate through array buttonSymbols to create calculator buttons
+        // create calculator buttons
+        // iterate through array buttonSymbols
         for (int i = 0; i < buttonSymbols.length; i++) {
             JButton button = new JButton(); // create a button
             String buttonSymbol = buttonSymbols[i]; // get button symbol
             button.setFont(new Font("Arial", Font.PLAIN, 30)); // set button font
             button.setText(buttonSymbol); // put symbol on button
+            button.setFocusable(false);
+            button.setBorder(new LineBorder(customBlack)); // make button border black
+
+            // symbol is a topSymbol
+            if (Arrays.asList(topSymbols).contains(buttonSymbol)) {
+                button.setBackground(customLightGray);  // set button color to light gray
+                button.setForeground(customBlack);  // set button text to black
+            } 
+            // symbol is a rightSymbol
+            else if (Arrays.asList(rightSymbols).contains(buttonSymbol)) {
+                button.setBackground(customOrange); // set button color to orange
+                button.setForeground(Color.white);  // set button text to white
+            } 
+            // regular symbol
+            else {      
+                button.setBackground(customDarkGray);   // set button color to dark gray
+                button.setForeground(Color.white);  // set button text to white
+            }
+
             buttonsPanel.add(button); // add button to button panel
         }
     }
