@@ -52,5 +52,19 @@ public class Calculator {
         displayPanel.setLayout(new BorderLayout());
         displayPanel.add(displayLabel); // add display label to display panel
         frame.add(displayPanel, BorderLayout.NORTH); // add display panel to top of window
+
+        // set up button panel
+        buttonsPanel.setLayout(new GridLayout(5, 4)); // panel with 5 rows and 4 columns
+        buttonsPanel.setBackground(customBlack); // set background black
+        frame.add(buttonsPanel); // add button panel to window
+
+        // iterate through array buttonSymbols to create calculator buttons
+        for (int i = 0; i < buttonSymbols.length; i++) {
+            JButton button = new JButton(); // create a button
+            String buttonSymbol = buttonSymbols[i]; // get button symbol
+            button.setFont(new Font("Arial", Font.PLAIN, 30)); // set button font
+            button.setText(buttonSymbol); // put symbol on button
+            buttonsPanel.add(button); // add button to button panel
+        }
     }
 }
