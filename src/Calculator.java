@@ -102,18 +102,18 @@ public class Calculator {
                     // buttonSymbol is a top symbol
                     if(Arrays.asList(topSymbols).contains(buttonSymbol)){
                         // buttonSymbol is "AC" --> clear calculator
-                        if(buttonSymbol == "AC"){
+                        if(buttonSymbol.equals("AC")){
                             clearAll(); // clear calculator variables
                             displayLabel.setText("0");  // set text to "0"
                         }
                         // buttonSymbol is "+/-" --> invert number
-                        else if(buttonSymbol == "+/-"){
+                        else if(buttonSymbol.equals("+/-")){
                             double numDisplay = Double.parseDouble(displayLabel.getText()); // convert number in label to a double
                             numDisplay *= -1;   // multiply current number by -1 to invert sign
                             displayLabel.setText(removeZeroDecimal(numDisplay));  // update label with inverted number
                         }
                         // buttonSymbol is "%" --> convert number to a percentage 
-                        else if(buttonSymbol == "%"){
+                        else if(buttonSymbol.equals("%")){
                             double numDisplay = Double.parseDouble(displayLabel.getText()); // convert number in label to a double
                             numDisplay /= 100; // divide current number by 100
                             displayLabel.setText(removeZeroDecimal(numDisplay));  // update label with percentage
@@ -122,17 +122,17 @@ public class Calculator {
                     // buttonSymbol is a right symbol
                     else if (Arrays.asList(rightSymbols).contains(buttonSymbol)){
                         // buttonSymbol is "=" --> simplify
-                        if(buttonSymbol == "="){
+                        if(buttonSymbol.equals("=")){
                             // perform operation between A and B
                             if(A != null){
                                 B = displayLabel.getText(); // store second number in B
                                 double numA = Double.parseDouble(A);    // convert first number A to a double
                                 double numB = Double.parseDouble(B);    // convert second number B to a double
                                 
-                                if(operator == "÷") displayLabel.setText(removeZeroDecimal(numA/numB));
-                                else if(operator == "×") displayLabel.setText(removeZeroDecimal(numA*numB));
-                                else if(operator == "-") displayLabel.setText(removeZeroDecimal(numA-numB));
-                                else if(operator == "+") displayLabel.setText(removeZeroDecimal(numA+numB));
+                                if(operator.equals("÷")) displayLabel.setText(removeZeroDecimal(numA/numB)); // operation is division
+                                else if(operator.equals("×")) displayLabel.setText(removeZeroDecimal(numA*numB));    // operation is multiplication
+                                else if(operator.equals("-")) displayLabel.setText(removeZeroDecimal(numA-numB));    // operation is subtraction
+                                else if(operator.equals("+")) displayLabel.setText(removeZeroDecimal(numA+numB));    // operation is addition
 
                                 clearAll(); // reset all values
                             }
@@ -151,16 +151,16 @@ public class Calculator {
                     // buttonSymbol is an other symbol
                     else{
                         // buttonSymbol is a decimal "."
-                        if(buttonSymbol == "."){
+                        if(buttonSymbol.equals(".")){
                             if(!displayLabel.getText().contains(buttonSymbol)) displayLabel.setText(displayLabel.getText() + buttonSymbol); // only one decimal in number
                         }
                         // buttonSymbol is a digit
                         else if("0123456789".contains(buttonSymbol)){
-                            if(displayLabel.getText() == "0" || displayLabel.getText() == "Infinity") displayLabel.setText(buttonSymbol);   // change text to button pressed
+                            if(displayLabel.getText().equals("0") || displayLabel.getText().equals("Infinity")) displayLabel.setText(buttonSymbol);   // change text to button pressed
                             else displayLabel.setText(displayLabel.getText() + buttonSymbol);   // add to text based on button pressed
                         }
                         // buttonSymbol is the square root "√"
-                        else if(buttonSymbol == "√"){
+                        else if(buttonSymbol.equals("√")){
                             double numDisplay = Double.parseDouble(displayLabel.getText()); // convert number in label to a double
                             displayLabel.setText(removeZeroDecimal(Math.sqrt(numDisplay)));  // update label with square root
                         }
