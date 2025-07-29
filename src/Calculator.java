@@ -31,7 +31,12 @@ public class Calculator {
     JPanel displayPanel = new JPanel(); // create panel to display calculation
     JPanel buttonsPanel = new JPanel(); // create panel for buttons
 
-    Calculator() {
+    // A+B, A-B, A*B, A/B
+    String A = "0";
+    String operator = null;
+    String B = null;
+
+    public Calculator() {
         // set up window
         frame.setVisible(true); // set window to be visible
         frame.setSize(boardWidth, boardHeight); // set size of window
@@ -61,6 +66,8 @@ public class Calculator {
         // create calculator buttons
         // iterate through array buttonSymbols
         for (int i = 0; i < buttonSymbols.length; i++) {
+            
+            // create and set up button
             JButton button = new JButton(); // create a button
             String buttonSymbol = buttonSymbols[i]; // get button symbol
             button.setFont(new Font("Arial", Font.PLAIN, 30)); // set button font
@@ -68,23 +75,75 @@ public class Calculator {
             button.setFocusable(false);
             button.setBorder(new LineBorder(customBlack)); // make button border black
 
-            // symbol is a topSymbol
+            // determine and set color of button
+            // buttonSymbol is a topSymbol
             if (Arrays.asList(topSymbols).contains(buttonSymbol)) {
                 button.setBackground(customLightGray);  // set button color to light gray
                 button.setForeground(customBlack);  // set button text to black
             } 
-            // symbol is a rightSymbol
+            // buttonSymbol is a rightSymbol
             else if (Arrays.asList(rightSymbols).contains(buttonSymbol)) {
                 button.setBackground(customOrange); // set button color to orange
                 button.setForeground(Color.white);  // set button text to white
             } 
-            // regular symbol
+            // buttonSymbol is an other symbol
             else {      
                 button.setBackground(customDarkGray);   // set button color to dark gray
                 button.setForeground(Color.white);  // set button text to white
             }
 
             buttonsPanel.add(button); // add button to button panel
+
+            // add action listener
+            button.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    JButton button = (JButton) e.getSource();   // get button that was clicked
+                    String buttonSymbol = button.getText(); // get symbol of clicked button
+
+                    // buttonSymbol is a top symbol
+                    if(Arrays.asList(topSymbols).contains(buttonSymbol)){
+                        // buttonSymbol is "AC" --> clear calculator
+                        if(buttonSymbol == "AC"){
+                            clearAll(); // clear calculator variables
+                            displayLabel.setText("0");  // set text to "0"
+                        }
+                        // buttonSymbol is "+/-" --> invert number
+                        else if(buttonSymbol == "+/-"){
+                            double numDisplay = Double.parseDouble(displayLabel.getText()); // convert number in label to a double
+                            numDisplay *= -1;   // multiply current number by -1 to invert sign
+                            displayLabel.setText(removeZeroDecimal(numDisplay));  // update label with inverted number
+                        }
+                        // buttonSymbol is "%" --> convert number to a percentage 
+                        else if(buttonSymbol == "%"){
+                            double numDisplay = Double.parseDouble(displayLabel.getText()); // convert number in label to a double
+                            numDisplay /= 100; // divide current number by 100
+                            displayLabel.setText(removeZeroDecimal(numDisplay));  // update label with percentage
+                        }
+                    }
+                    // buttonSymbol is a right symbol
+                    else if (Arrays.asList(rightSymbols).contains(buttonSymbol)){
+
+                    }
+                    // buttonSymbol is an other symbol
+                    else{
+                        
+                    }
+                }
+            });
         }
+    }
+
+    // clears the calculator
+    public void clearAll(){
+        // reset all variables
+        A = "0";
+        operator = null;
+        B = null;
+    }
+
+    // determine whether numDisplay is a decimal number
+    public String removeZeroDecimal(double numDisplay){
+        if(numDisplay % 1 == 0) return Integer.toString((int)numDisplay);  // numDisplay is a whole number --> remove decimal
+        else return Double.toString(numDisplay);    // numDisplay is a decimal --> keep decimal 
     }
 }
