@@ -38,7 +38,6 @@ public class Calculator {
 
     public Calculator() {
         // set up window
-        frame.setVisible(true); // set window to be visible
         frame.setSize(boardWidth, boardHeight); // set size of window
         frame.setLocationRelativeTo(null); // center align window
         frame.setResizable(false); // fix size of window
@@ -122,14 +121,28 @@ public class Calculator {
                     }
                     // buttonSymbol is a right symbol
                     else if (Arrays.asList(rightSymbols).contains(buttonSymbol)){
-
+                        
                     }
                     // buttonSymbol is an other symbol
                     else{
-                        
+                        // buttonSymbol is a decimal "."
+                        if(buttonSymbol == "."){
+                            if(!displayLabel.getText().contains(buttonSymbol)) displayLabel.setText(displayLabel.getText() + buttonSymbol); // only one decimal in number
+                        }
+                        // buttonSymbol is a digit
+                        else if("0123456789".contains(buttonSymbol)){
+                            if(displayLabel.getText() == "0") displayLabel.setText(buttonSymbol);   // change text to button pressed
+                            else displayLabel.setText(displayLabel.getText() + buttonSymbol);   // add to text based on button pressed
+                        }
+                        // buttonSymbol is the square root "√"
+                        else{
+
+                        }
                     }
                 }
             });
+
+            frame.setVisible(true); // set window to be visible
         }
     }
 
