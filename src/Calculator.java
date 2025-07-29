@@ -75,12 +75,12 @@ public class Calculator {
             button.setBorder(new LineBorder(customBlack)); // make button border black
 
             // determine and set color of button
-            // buttonSymbol is a topSymbol
+            // buttonSymbol is a top symbol
             if (Arrays.asList(topSymbols).contains(buttonSymbol)) {
                 button.setBackground(customLightGray);  // set button color to light gray
                 button.setForeground(customBlack);  // set button text to black
             } 
-            // buttonSymbol is a rightSymbol
+            // buttonSymbol is a right symbol
             else if (Arrays.asList(rightSymbols).contains(buttonSymbol)) {
                 button.setBackground(customOrange); // set button color to orange
                 button.setForeground(Color.white);  // set button text to white
@@ -121,7 +121,32 @@ public class Calculator {
                     }
                     // buttonSymbol is a right symbol
                     else if (Arrays.asList(rightSymbols).contains(buttonSymbol)){
-                        
+                        // buttonSymbol is "=" --> simplify
+                        if(buttonSymbol == "="){
+                            // perform operation between A and B
+                            if(A != null){
+                                B = displayLabel.getText(); // store second number in B
+                                double numA = Double.parseDouble(A);    // convert first number A to a double
+                                double numB = Double.parseDouble(B);    // convert second number B to a double
+                                
+                                if(operator == "÷") displayLabel.setText(removeZeroDecimal(numA/numB));
+                                else if(operator == "×") displayLabel.setText(removeZeroDecimal(numA*numB));
+                                else if(operator == "-") displayLabel.setText(removeZeroDecimal(numA-numB));
+                                else if(operator == "+") displayLabel.setText(removeZeroDecimal(numA+numB));
+
+                                clearAll(); // reset all values
+                            }
+                        }
+                        // buttonSymbol is an operator
+                        else if("÷×-+".contains(buttonSymbol)){
+                            // no operation selected
+                            if(operator == null) {
+                                A = displayLabel.getText(); // store current number in A
+                                displayLabel.setText("0");  // reset label text to "0"
+                                B = "0";    // set second number B to 0   
+                            }
+                            operator = buttonSymbol;    // store operation
+                        }
                     }
                     // buttonSymbol is an other symbol
                     else{
@@ -131,7 +156,7 @@ public class Calculator {
                         }
                         // buttonSymbol is a digit
                         else if("0123456789".contains(buttonSymbol)){
-                            if(displayLabel.getText() == "0") displayLabel.setText(buttonSymbol);   // change text to button pressed
+                            if(displayLabel.getText() == "0" || displayLabel.getText() == "Infinity") displayLabel.setText(buttonSymbol);   // change text to button pressed
                             else displayLabel.setText(displayLabel.getText() + buttonSymbol);   // add to text based on button pressed
                         }
                         // buttonSymbol is the square root "√"
@@ -148,7 +173,7 @@ public class Calculator {
 
     // clears the calculator
     public void clearAll(){
-        // reset all variables
+        // reset all values
         A = "0";
         operator = null;
         B = null;
