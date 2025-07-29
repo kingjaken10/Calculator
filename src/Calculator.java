@@ -160,8 +160,9 @@ public class Calculator {
                             else displayLabel.setText(displayLabel.getText() + buttonSymbol);   // add to text based on button pressed
                         }
                         // buttonSymbol is the square root "√"
-                        else{
-
+                        else if(buttonSymbol == "√"){
+                            double numDisplay = Double.parseDouble(displayLabel.getText()); // convert number in label to a double
+                            displayLabel.setText(removeZeroDecimal(Math.sqrt(numDisplay)));  // update label with square root
                         }
                     }
                 }
